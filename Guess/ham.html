@@ -1,0 +1,118 @@
+<html>
+  <head>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      header {
+        font-family: serif;
+      }
+      body {
+        background-color: black;
+      }
+      .Again {
+        background-color: white;
+        padding: 10px 40px;
+        margin-top: 10px;
+        margin-left: 10px;
+        font-weight: bold;
+        font-size: 30px;
+      }
+      .firstflex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .onetozero {
+        color: white;
+      }
+      h1 {
+        color: white;
+        font-weight: bold;
+        font-size: 40px;
+        text-align: center;
+      }
+      .line {
+        background-color: white;
+        width: 100%;
+        height: 10px;
+        margin-top: 80px;
+        margin-bottom: 200px;
+      }
+      .line1 {
+        font-size: 60px;
+        width: 90px;
+        background-color: white;
+        padding: 60px;
+        position: absolute;
+        left: 700px;
+        top: 120px;
+        text-align: center;
+      }
+
+      .aftercontent {
+        font-size: 30px;
+        color: white;
+        display: grid;
+        grid-template-columns: 160px 300px;
+        grid-template-rows: 100px 100px;
+        justify-content: center;
+        row-gap: 30px;
+        column-gap: 160px;
+        justify-items: center;
+      }
+      .guess {
+        width: 140px;
+        height: 80px;
+        align-self: end;
+        background-color: black;
+        border: 2px solid white;
+        color: white;
+        font-size: 30px;
+        text-align: center;
+      }
+      .check {
+        width: 100px;
+        height: 60px;
+        font-weight: bold;
+        font-size: 20px;
+      }
+      .message {
+        grid-column: 2/3;
+        grid-row: 1/2;
+        color: white;
+        font-weight: bold;
+        height: 150px;
+        align-self: start;
+      }
+      .btn:hover {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="firstflex">
+        <button class="btn Again">Again!</button>
+        <div class="onetozero">&ltBetween 1 and 20&gt</div>
+      </div>
+      <h1>GUESS MY NUMBER CHALLANGE!</h1>
+    </header>
+
+    <div class="line"></div>
+    <div class="line1">?</div>
+    <div class="aftercontent">
+      <input type="number" class="guess" />
+      <button class="btn check">Check!</button>
+      <div class="message">🤔Start guessing.......</div>
+      <div>
+        <div class="label-score">💯Score:<span class="score">20</span></div>
+        <div class="label-highscore">
+          🏅Highscore:<span class="highscore">0</span>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript" src="vs.js"></script>
+  </body>
+</html>
