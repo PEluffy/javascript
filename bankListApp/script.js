@@ -75,17 +75,15 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-displayMovements(account1.movements);
 const displayTotal = function (movements) {
   const total = movements.reduce(function (acc, mov) {
     return acc + mov;
   }, 0);
   labelBalance.textContent = `${total} €`;
 };
-displayTotal(account1.movements);
 
-const displayDipositsAndIntrest = function (movements) {
-  const deposit = movements
+const displayDipositsAndIntrest = function (account) {
+  const deposit = account.movements
     .filter(function (mov) {
       return mov > 0;
     })
@@ -94,33 +92,55 @@ const displayDipositsAndIntrest = function (movements) {
     }, 0);
   labelSumIn.textContent = `${deposit}€`;
 
-  const interest = movements
-    .filter(function (mov) {
-      return mov > 0;
-    })
-    .map(function (mov) {
-      return mov * 0.012;
-    })
-    .reduce(function (acc, mov) {
-      return acc + mov;
-    });
+  const interest = Math.floor(
+    account.movements
+      .filter(function (mov) {
+        return mov > 0;
+      })
+      .map(function (mov) {
+        return (mov * account.interestRate) / 100;
+      })
+      .reduce(function (acc, mov) {
+        return acc + mov;
+      })
+  );
   labelSumInterest.textContent = `${interest}€`;
 };
 
 const displayWithdrawal = function (movements) {
-  const withdrawal =
-    movements
-      .filter(function (mov) {
-        return mov < 0;
-      })
-      .reduce(function (acc, mov) {
-        return acc + mov;
-      }) * -1;
-  labelSumOut.textContent = `${withdrawal}€`;
+  const withdrawal = movements
+    .filter(function (mov) {
+      return mov < 0;
+    })
+    .reduce(function (acc, mov) {
+      return acc + mov;
+    }, 0);
+  labelSumOut.textContent = `${Math.abs(withdrawal)}€`;
 };
 
-displayDipositsAndIntrest(account1.movements);
-displayWithdrawal(account1.movements);
+let currentAccount;
+btnLogin.addEventListener('click', function (e) {
+  //prevent form from submitting
+  e.preventDefault();
+  currentAccount = accounts.find(function (acc) {
+    return acc.username === inputLoginUsername.value;
+  });
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    labelWelcome.textContent = `Welcome back ,${
+      currentAccount.owner.split(' ')[0]
+    }`;
+    //clear input fields
+    inputLoginUsername.value = inputLoginPin.value = '';
+    //removing field focus
+    inputLoginPin.blur();
+    displayMovements(currentAccount.movements);
+    displayDipositsAndIntrest(currentAccount);
+    displayWithdrawal(currentAccount.movements);
+    displayTotal(currentAccount.movements);
+    containerApp.style.opacity = '1';
+  }
+  console.log(currentAccount);
+});
 // btnSort.addEventListener('click', function () {
 //   const sorted = account1.movements.sort((a, b) => a - b);
 //   displayMovements(sorted);
