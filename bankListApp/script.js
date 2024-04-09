@@ -61,6 +61,12 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+const updateUI = function (currentAccount) {
+  displayMovements(currentAccount.movements);
+  displayDipositsAndIntrest(currentAccount);
+  displayWithdrawal(currentAccount.movements);
+  displayTotal(currentAccount);
+};
 const displayMovements = function (movements) {
   movements.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
@@ -75,11 +81,12 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-const displayTotal = function (movements) {
-  const total = movements.reduce(function (acc, mov) {
+const displayTotal = function (accounts) {
+  const total = accounts.movements.reduce(function (acc, mov) {
     return acc + mov;
   }, 0);
   labelBalance.textContent = `${total} €`;
+  accounts.balance = total;
 };
 
 const displayDipositsAndIntrest = function (account) {
@@ -133,14 +140,69 @@ btnLogin.addEventListener('click', function (e) {
     inputLoginUsername.value = inputLoginPin.value = '';
     //removing field focus
     inputLoginPin.blur();
-    displayMovements(currentAccount.movements);
-    displayDipositsAndIntrest(currentAccount);
-    displayWithdrawal(currentAccount.movements);
-    displayTotal(currentAccount.movements);
+    updateUI(currentAccount);
     containerApp.style.opacity = '1';
   }
   console.log(currentAccount);
 });
+
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputLoanAmount.value);
+  const mov = currentAccount.movements;
+  const deposit = mov.filter(function (mov, i, arr) {
+    return mov > 0;
+  });
+  console.log(deposit);
+  if (
+    amount > 0 &&
+    deposit.some(function (mov, i, arr) {
+      return mov >= 0.1 * amount;
+    })
+  ) {
+    currentAccount.movements.push(amount);
+    updateUI(currentAccount);
+    inputLoanAmount.value = '';
+    console.log('lone is granted');
+  }
+});
+
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(function (acc) {
+    return acc.username === inputTransferTo.value;
+  });
+  inputTransferAmount.value = inputTransferTo.value = '';
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentAccount.balance >= amount &&
+    receiverAcc?.username !== currentAccount.username
+  ) {
+    //Transfer
+    console.log(`Transfering balance of ${amount} to ${receiverAcc.username}`);
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+    updateUI(currentAccount);
+  }
+});
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    const index = accounts.findIndex(function (account) {
+      return account.username === currentAccount.username;
+    });
+    accounts.splice(index, 1);
+    (inputClosePin.value == inputCloseUsername.value) == '';
+    containerApp.style.opacity = '0';
+  }
+});
+
 // btnSort.addEventListener('click', function () {
 //   const sorted = account1.movements.sort((a, b) => a - b);
 //   displayMovements(sorted);
