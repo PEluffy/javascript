@@ -67,8 +67,10 @@ const updateUI = function (currentAccount) {
   displayWithdrawal(currentAccount.movements);
   displayTotal(currentAccount);
 };
-const displayMovements = function (movements) {
-  movements.forEach(function (mov, i) {
+const displayMovements = function (movements, sort = false) {
+  containerMovements.innerHTML = '';
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
     const html = `
     <div class="movements__row">
@@ -202,11 +204,12 @@ btnClose.addEventListener('click', function (e) {
     containerApp.style.opacity = '0';
   }
 });
-
-// btnSort.addEventListener('click', function () {
-//   const sorted = account1.movements.sort((a, b) => a - b);
-//   displayMovements(sorted);
-// });
+let sortedState = false;
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sortedState);
+  sortedState = !sortedState;
+});
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -257,3 +260,97 @@ const calcAverageHumanAge = ages =>
     .reduce((acc, curr, i, arr) => acc + curr / arr.length, 0);
 
 console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
+
+let diceRoll = Array.from(
+  { length: 100 },
+  () => Math.floor(Math.random() * 6) + 1
+);
+// console.log(diceRoll);
+// let a = Math.floor(Math.random() * 6) + 1;
+// console.log(a);
+
+//Array Methods Practice
+
+//total bank deposits and withdrawl
+const bankTotalSum = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, cur) => acc + cur);
+console.log(bankTotalSum);
+
+const sumOfDipositAndWithdrawl = {};
+const deposits = new Array();
+//total deposit
+const totalDeposit = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .filter(function (mov) {
+    return mov > 0;
+  })
+  .reduce((acc, cur) => acc + cur, 0);
+console.log(totalDeposit);
+
+//total withdrawl
+const totalWithdrawl = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .filter(function (mov) {
+    if (mov > 0) {
+      deposits.push(mov);
+    }
+    return mov < 0;
+  })
+  .reduce((acc, cur) => acc + cur * -1, 0);
+console.log(totalWithdrawl);
+
+//deposits in bank that is atleast 1000
+
+console.log(deposits);
+const depositsOver1000 = deposits
+  .filter(dep => dep > 1000)
+  .reduce((acc, cur) => acc + 1, 1);
+console.log(depositsOver1000);
+
+//creating a object that contain sum of deposits and withdrawl
+
+const { deposit, withdrawal } = accounts
+  .flatMap(acc => acc.movements)
+  .reduce(
+    (sums, value) => {
+      sums[value > 0 ? 'deposit' : 'withdrawal'] += value;
+      return sums;
+    },
+    { deposit: 0, withdrawal: 0 }
+  );
+console.log(deposit, withdrawal);
+
+//this is a nice title ->This Is a Nice Title
+
+const convertTitleCase = function (title) {
+  const capitalizer = function (word) {
+    return word[0].toUpperCase() + word.slice(1);
+  };
+  const exception = [
+    'a',
+    'an',
+    'the',
+    'but',
+    'or',
+    'on',
+    'in',
+    'and',
+    'with',
+    'is',
+  ];
+  const word = title
+    .toLowerCase()
+    .split(' ')
+    .map(function (word, index) {
+      return index === 0 || !exception.includes(word)
+        ? capitalizer(word)
+        : word;
+    })
+    .join(' ');
+  return word;
+};
+console.log(convertTitleCase('this is a nice title'));
