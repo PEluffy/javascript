@@ -214,143 +214,218 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 // LECTURES
 
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
+// const currencies = new Map([
+//   ['USD', 'United States dollar'],
+//   ['EUR', 'Euro'],
+//   ['GBP', 'Pound sterling'],
+// ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-/////////////////////////////////////////////////
+// /////////////////////////////////////////////////
 
-const dogsJulia = [3, 5, 2, 12, 7];
+// const dogsJulia = [3, 5, 2, 12, 7];
 
-const dogsKate = [9, 16, 6, 8, 3];
+// const dogsKate = [9, 16, 6, 8, 3];
 
-const checkDogs = function (dogsJulia, dogsKate) {
-  const dogsJuliaCorrected = dogsJulia.slice();
-  dogsJuliaCorrected.splice(0, 1);
-  dogsJuliaCorrected.splice(-2);
-  const concatArray = dogsJuliaCorrected.concat(dogsKate);
-  concatArray.forEach(function (dogsAge, index) {
-    const adultOrNot = dogsAge < 3 ? 'NotAdult' : 'Adult';
-    console.log(`${index}th dog of Age ${dogsAge} is ${adultOrNot}`);
-  });
-};
+// const checkDogs = function (dogsJulia, dogsKate) {
+//   const dogsJuliaCorrected = dogsJulia.slice();
+//   dogsJuliaCorrected.splice(0, 1);
+//   dogsJuliaCorrected.splice(-2);
+//   const concatArray = dogsJuliaCorrected.concat(dogsKate);
+//   concatArray.forEach(function (dogsAge, index) {
+//     const adultOrNot = dogsAge < 3 ? 'NotAdult' : 'Adult';
+//     console.log(`${index}th dog of Age ${dogsAge} is ${adultOrNot}`);
+//   });
+// };
 
-checkDogs(dogsJulia, dogsKate);
+// checkDogs(dogsJulia, dogsKate);
 
-const createUsername = function (accs) {
-  accs.forEach(function (acc) {
-    acc.username = acc.owner
-      .toLowerCase()
-      .split(' ')
-      .map(val => val.slice(0, 1))
-      .join('');
-  });
-};
-createUsername(accounts);
-console.log(accounts);
+// const createUsername = function (accs) {
+//   accs.forEach(function (acc) {
+//     acc.username = acc.owner
+//       .toLowerCase()
+//       .split(' ')
+//       .map(val => val.slice(0, 1))
+//       .join('');
+//   });
+// };
+// createUsername(accounts);
+// console.log(accounts);
 
-const calcAverageHumanAge = ages =>
-  ages
-    .map(age => (age <= 2 ? 2 * age : 16 + age * 4))
-    .filter(age => age >= 18)
-    .reduce((acc, curr, i, arr) => acc + curr / arr.length, 0);
+// const calcAverageHumanAge = ages =>
+//   ages
+//     .map(age => (age <= 2 ? 2 * age : 16 + age * 4))
+//     .filter(age => age >= 18)
+//     .reduce((acc, curr, i, arr) => acc + curr / arr.length, 0);
 
-console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
+// console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]));
 
-let diceRoll = Array.from(
-  { length: 100 },
-  () => Math.floor(Math.random() * 6) + 1
+// let diceRoll = Array.from(
+//   { length: 100 },
+//   () => Math.floor(Math.random() * 6) + 1
+// );
+// // console.log(diceRoll);
+// // let a = Math.floor(Math.random() * 6) + 1;
+// // console.log(a);
+
+// //Array Methods Practice
+
+// //total bank deposits and withdrawl
+// const bankTotalSum = accounts
+//   .map(acc => acc.movements)
+//   .flat()
+//   .reduce((acc, cur) => acc + cur);
+// console.log(bankTotalSum);
+
+// const sumOfDipositAndWithdrawl = {};
+// const deposits = new Array();
+// //total deposit
+// const totalDeposit = accounts
+//   .map(acc => acc.movements)
+//   .flat()
+//   .filter(function (mov) {
+//     return mov > 0;
+//   })
+//   .reduce((acc, cur) => acc + cur, 0);
+// console.log(totalDeposit);
+
+// //total withdrawl
+// const totalWithdrawl = accounts
+//   .map(acc => acc.movements)
+//   .flat()
+//   .filter(function (mov) {
+//     if (mov > 0) {
+//       deposits.push(mov);
+//     }
+//     return mov < 0;
+//   })
+//   .reduce((acc, cur) => acc + cur * -1, 0);
+// console.log(totalWithdrawl);
+
+// //deposits in bank that is atleast 1000
+
+// console.log(deposits);
+// const depositsOver1000 = deposits
+//   .filter(dep => dep > 1000)
+//   .reduce((acc, cur) => acc + 1, 1);
+// console.log(depositsOver1000);
+
+// //creating a object that contain sum of deposits and withdrawl
+
+// const { deposit, withdrawal } = accounts
+//   .flatMap(acc => acc.movements)
+//   .reduce(
+//     (sums, value) => {
+//       sums[value > 0 ? 'deposit' : 'withdrawal'] += value;
+//       return sums;
+//     },
+//     { deposit: 0, withdrawal: 0 }
+//   );
+// console.log(deposit, withdrawal);
+
+// //this is a nice title ->This Is a Nice Title
+
+// const convertTitleCase = function (title) {
+//   const capitalizer = function (word) {
+//     return word[0].toUpperCase() + word.slice(1);
+//   };
+//   const exception = [
+//     'a',
+//     'an',
+//     'the',
+//     'but',
+//     'or',
+//     'on',
+//     'in',
+//     'and',
+//     'with',
+//     'is',
+//   ];
+//   const word = title
+//     .toLowerCase()
+//     .split(' ')
+//     .map(function (word, index) {
+//       return index === 0 || !exception.includes(word)
+//         ? capitalizer(word)
+//         : word;
+//     })
+//     .join(' ');
+//   return word;
+// };
+// console.log(convertTitleCase('this is a nice title'));
+
+const dogs = [
+  {
+    weight: 22,
+    curfood: 250,
+    owners: ['Alice', 'Bob'],
+  },
+  {
+    weight: 8,
+    curfood: 200,
+    owners: ['Maltilda'],
+  },
+  {
+    weight: 13,
+    curfood: 275,
+    owners: ['Sarah', 'John'],
+  },
+  {
+    weight: 32,
+    curfood: 340,
+    owners: ['Michael'],
+  },
+];
+dogs.forEach(function (dog) {
+  dog.recommendedFood = Math.trunc(dog.weight ** 0.75 * 28);
+});
+
+const dogSarah = dogs.find(function (dog) {
+  return dog.owners.includes('Sarah');
+});
+
+console.log(
+  `Sarah's dog is eating too ${
+    dogSarah.curfood > dogSarah.recommendedFood ? 'much' : 'little'
+  } food.`
 );
-// console.log(diceRoll);
-// let a = Math.floor(Math.random() * 6) + 1;
-// console.log(a);
 
-//Array Methods Practice
-
-//total bank deposits and withdrawl
-const bankTotalSum = accounts
-  .map(acc => acc.movements)
-  .flat()
-  .reduce((acc, cur) => acc + cur);
-console.log(bankTotalSum);
-
-const sumOfDipositAndWithdrawl = {};
-const deposits = new Array();
-//total deposit
-const totalDeposit = accounts
-  .map(acc => acc.movements)
-  .flat()
-  .filter(function (mov) {
-    return mov > 0;
+const ownersEatTooMuch = dogs
+  .filter(function (dog) {
+    return dog.curfood > dog.recommendedFood;
   })
-  .reduce((acc, cur) => acc + cur, 0);
-console.log(totalDeposit);
+  .flatMap(dog => dog.owners);
+console.log(ownersEatTooMuch);
 
-//total withdrawl
-const totalWithdrawl = accounts
-  .map(acc => acc.movements)
-  .flat()
-  .filter(function (mov) {
-    if (mov > 0) {
-      deposits.push(mov);
-    }
-    return mov < 0;
+const ownersEatTooLittle = dogs
+  .filter(function (dog) {
+    return dog.curfood < dog.recommendedFood;
   })
-  .reduce((acc, cur) => acc + cur * -1, 0);
-console.log(totalWithdrawl);
+  .flatMap(dog => dog.owners);
+console.log(ownersEatTooLittle);
+console.log(`${ownersEatTooMuch.join(' and ')}'s dogs eat too much`);
+console.log(`${ownersEatTooLittle.join(' and ')}'s dogs eat too little`);
 
-//deposits in bank that is atleast 1000
+const dogWithExactRec = dogs.some(function (dog) {
+  return dog.curfood === dog.recommendedFood;
+});
 
-console.log(deposits);
-const depositsOver1000 = deposits
-  .filter(dep => dep > 1000)
-  .reduce((acc, cur) => acc + 1, 1);
-console.log(depositsOver1000);
-
-//creating a object that contain sum of deposits and withdrawl
-
-const { deposit, withdrawal } = accounts
-  .flatMap(acc => acc.movements)
-  .reduce(
-    (sums, value) => {
-      sums[value > 0 ? 'deposit' : 'withdrawal'] += value;
-      return sums;
-    },
-    { deposit: 0, withdrawal: 0 }
+console.log(dogWithExactRec);
+const checkEactingOkay = function (dog) {
+  return (
+    dog.curfood > dog.recommendedFood * 0.9 &&
+    dog.curfood < dog.recommendedFood * 1.1
   );
-console.log(deposit, withdrawal);
-
-//this is a nice title ->This Is a Nice Title
-
-const convertTitleCase = function (title) {
-  const capitalizer = function (word) {
-    return word[0].toUpperCase() + word.slice(1);
-  };
-  const exception = [
-    'a',
-    'an',
-    'the',
-    'but',
-    'or',
-    'on',
-    'in',
-    'and',
-    'with',
-    'is',
-  ];
-  const word = title
-    .toLowerCase()
-    .split(' ')
-    .map(function (word, index) {
-      return index === 0 || !exception.includes(word)
-        ? capitalizer(word)
-        : word;
-    })
-    .join(' ');
-  return word;
 };
-console.log(convertTitleCase('this is a nice title'));
+
+const dogWithOkFood = dogs.some(checkEactingOkay);
+console.log(dogWithOkFood);
+console.log(dogs);
+
+console.log(dogs.filter(checkEactingOkay));
+
+const dogsSorted = dogs.slice().sort(function (a, b) {
+  return a.recommendedFood - b.recommendedFood;
+});
+console.log(dogsSorted);
