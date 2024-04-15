@@ -6,6 +6,11 @@
     <title>Document</title>
   </head>
   <body>
+    <div>Teachable Machine Image Model</div>
+    <!-- <div id="webcam-container"></div> -->
+    <div id="label-container"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js"></script>
     <p id="timer">
       <span id="hours">00</span> :<span id="minutes"> 00</span> :<span
         id="seconds"
@@ -13,6 +18,7 @@
         00</span
       >
     </p>
+    <button id="startPrediction">StartPrediction</button>
     <button id="start">Start Timer</button>
     <button id="stop">Stop</button>
     <button id="reset">Reset</button>
