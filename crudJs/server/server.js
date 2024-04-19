@@ -1,24 +1,32 @@
-import { createServer } from "http";
-import * as fs from "node:fs";
-const port = 3000;
+const express = require("express");
+const app = express();
+const path = require("path");
+const connection = require("../database/dbConnect");
+const {
+  createUser,
+  readUser,
+  updateUser,
+  deleteUser,
+} = require("../database/Utilities");
 
-const server = createServer((req, res) => {
-  fs.readFile("../client/crud.html", function (error, data) {
-    if (error) {
-      res.writeHead(404);
-      res.end("File not found");
-    } else {
-      res.writeHead(200, { "Content-Type": "text/html" });
-      res.write(data);
-    }
-    res.end();
-  });
+function DatabaseExceptionError(error) {
+  console.error(error);
+}
+function ConnectionEstalbished(connection) {
+  console.log("sucess database Connection");
+}
+if (!connection) {
+  DatabaseExceptionError("Connection not esthablished");
+} else {
+  ConnectionEstalbished(connection);
+}
+
+app.use(express.static(path.join(__dirname, "../client")));
+app.get("/", (req, res) => {
+  return res.sendFile(path.join(__dirname, "../client/crud.html"));
+});
+app.post("/submit", async (req, res) => {
+  return res.end("sending data to database");
 });
 
-server.listen(port, function (error) {
-  if (error) {
-    console.log("Something went wrong", error);
-  } else {
-    console.log("Server is listening on port no.", port);
-  }
-});
+app.listen(3000, () => console.log("Server Started"));

@@ -10,9 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.19.2",
     "mysql2": "^3.9.5"
   },
-  "type": "module",
   "devDependencies": {
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4"
