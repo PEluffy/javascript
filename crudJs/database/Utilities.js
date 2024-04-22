@@ -15,8 +15,8 @@ function errorHandler(error, result, operation) {
 }
 
 function createUser(data) {
-  const { name, email, address, password } = data;
-  const sql = `INSERT INTO employee (name,email,address,password) VALUES (?,?,?,?) `;
+  const [name, email, address, password] = data;
+  const sql = `INSERT INTO employee (e_name,e_email,e_address,e_password) VALUES (?,?,?,?) `;
   connection.query(sql, [name, email, address, password], (error, result) => {
     errorHandler(error, result, "create");
   });
@@ -28,8 +28,8 @@ function readUser() {
   });
 }
 function updateUser(id, data) {
-  const { name, email, address, password } = data;
-  const sql = `UPDATE employee SET name=? ,email=? ,address=?,password=? WHERE id= ?`;
+  const [name, email, address, password] = data;
+  const sql = `UPDATE employee SET e_name=? ,e_email=? ,e_address=?,e_password=? WHERE e_id= ?`;
   connection.query(
     sql,
     [name, email, address, password, id],
@@ -39,7 +39,7 @@ function updateUser(id, data) {
   );
 }
 function deleteUser(id) {
-  const sql = `DELETE FROM employee WHERE ID=?`;
+  const sql = `DELETE FROM employee WHERE e_id=?`;
   connection.query(sql, id, (error, result) => {
     errorHandler(error, result, "delete");
   });
