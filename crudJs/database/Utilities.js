@@ -1,4 +1,4 @@
-const connection = require(`./dbConnect`);
+const buildConnection = require(`./dbConnect`);
 
 function errorWhileCrud(operation, error) {
   console.log(`error while ${operation} operation ${error}`);
@@ -13,24 +13,25 @@ function errorHandler(error, result, operation) {
     successWhileCrud(operation, result);
   }
 }
+var connection;
 
-function createUser(data) {
+(async () => {
+  connection = await buildConnection();
+})();
+async function createUser(data) {
   const [name, email, address, password] = data;
   const sql = `INSERT INTO employee (e_name,e_email,e_address,e_password) VALUES (?,?,?,?) `;
-  connection.query(sql, [name, email, address, password], (error, result) => {
-    errorHandler(error, result, "create");
-  });
+  await connection.query(sql, [name, email, address, password]);
 }
-function readUser() {
+async function readUser() {
   const sql = `Select * FROM  employee`;
-  connection.query(sql, (error, result) => {
-    errorHandler(error, result, "read");
-  });
+  const [rows, field] = await connection.query(sql);
+  return rows;
 }
-function updateUser(id, data) {
+async function updateUser(id, data) {
   const [name, email, address, password] = data;
   const sql = `UPDATE employee SET e_name=? ,e_email=? ,e_address=?,e_password=? WHERE e_id= ?`;
-  connection.query(
+  await connection.query(
     sql,
     [name, email, address, password, id],
     (error, result) => {
@@ -38,9 +39,9 @@ function updateUser(id, data) {
     }
   );
 }
-function deleteUser(id) {
+async function deleteUser(id) {
   const sql = `DELETE FROM employee WHERE e_id=?`;
-  connection.query(sql, id, (error, result) => {
+  await connection.query(sql, id, (error, result) => {
     errorHandler(error, result, "delete");
   });
 }

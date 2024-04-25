@@ -21,3 +21,28 @@ document
       body: json,
     });
   });
+
+function displayEmployees(employees) {
+  const tableBody = document.getElementById("employeeTableBody");
+  tableBody.innerHTML = "";
+  employees.forEach((employee) => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+    <td>${employee.e_id}<td>
+    <td>${employee.e_name}</td>
+    <td>${employee.e_email}</td>
+    <td>${employee.e_address}</td>
+    <td>${employee.e_password}</td>`;
+    tableBody.appendChild(row);
+  });
+}
+
+document.getElementById("displayButton").addEventListener("click", async () => {
+  const response = await fetch("/employees", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((response) => response.json());
+  console.log(response);
+});
