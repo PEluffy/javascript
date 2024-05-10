@@ -23,7 +23,10 @@ document
   });
 
 function displayEmployees(employees) {
-  const tableBody = document.getElementById("employeeTableBody");
+  const password = document.getElementById("password"); //content of index.html
+  const tableBody = document.getElementById("employeeTableBody"); //contenct of disEmploye.html
+  console.log(password);
+  console.log(tableBody);
   tableBody.innerHTML = "";
   employees.forEach((employee) => {
     const row = document.createElement("tr");
@@ -44,5 +47,6 @@ document.getElementById("displayButton").addEventListener("click", async () => {
       "Content-Type": "application/json",
     },
   }).then((response) => response.json());
+  displayEmployees(response);
   console.log(response);
 });
