@@ -1,22 +1,43 @@
-function snake() {
-  this.x = 20;
-  this.y = 0;
-  this.width = 10;
-  this.height = 10;
-
-  this.drawSnake = function () {
+class snake {
+  constructor(x, y) {
+    this.arrOfsnake = [
+      {
+        x: x,
+        y: y,
+      },
+      {
+        x: x + 10,
+        y: y,
+      },
+    ];
+    this.width = 10;
+    this.height = 10;
+  }
+  drawSnake = function () {
     ctx.fillStyle = "rgb(200, 0, 0)";
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    this.arrOfsnake.forEach((segment) => {
+      ctx.fillRect(segment.x, segment.y, this.width, this.height);
+    });
   };
 
-  function eatFoot() {
+  eatFoot() {
     function increaseSize() {}
   }
-  function move() {
-    function moveRight() {}
-    function MoveLeft() {}
-    function MoveUp() {}
-    function moveDown() {}
-  }
-  function die() {}
+
+  move = function (key) {
+    switch (key) {
+      case "w":
+        this.y = this.y + 10;
+        break;
+      case "a":
+        this.x = this.x - 10;
+        break;
+      case "s":
+        this.y = this.y - 10;
+        break;
+      case "d":
+        this.x = this.x + 10;
+        break;
+    }
+  };
 }

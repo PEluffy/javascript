@@ -11,18 +11,27 @@ let numberForY;
 if (canvas.getContext) {
   ctx = canvas.getContext("2d");
 }
+const { x: a, y: b } = randomNumberGenerator(
+  canvasHeightInGrids,
+  canvasHeightInGrids
+);
 
+let snakeObject = new snake(a, b); //creating snake object when game is started
+let foodObject = new food(); //creating food object when game is started
 let start = false;
-let snakeObject = new snake();
-let foodObject = new food();
+
 button_start.addEventListener("click", () => {
   start = true;
   console.log("Game started!");
+  console.log(snakeObject);
   snakeObject.drawSnake();
   const { x, y } = randomNumberGenerator(
     canvasHeightInGrids,
     canvasHeightInGrids
   );
-
   foodObject.drawFood(x, y);
+});
+addEventListener("keypress", function (event) {
+  console.log(event.key);
+  snakeObject.move(event.key);
 });
