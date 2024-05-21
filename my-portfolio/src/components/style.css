@@ -1,0 +1,8 @@
+.small-input {
+  width: 150px;
+  padding: 5px;
+  margin: 5px;
+}
+.hidden {
+  display: none;
+}

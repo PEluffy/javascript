@@ -10,10 +10,8 @@ export const User = (props: User) => {
   const { sex = "not specified" } = props;
   return (
     <>
-      <h2>
-        {props.name.first}
-        {props.name.last} sex is {sex}
-      </h2>
+      {props.name.first}
+      {props.name.last} sex is {sex}
     </>
   );
 };

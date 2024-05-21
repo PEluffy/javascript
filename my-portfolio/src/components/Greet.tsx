@@ -1,10 +1,12 @@
+import "./style.css";
 interface GreetProps {
   children: React.ReactNode;
   isLoggedIn: boolean;
+  isHidden: boolean;
 }
 export const Greet = (props: GreetProps) => {
   return (
-    <div>
+    <div className={props.isHidden ? "hidden" : "block"}>
       {props.isLoggedIn ? (
         <h2>hello {props.children}</h2>
       ) : (
