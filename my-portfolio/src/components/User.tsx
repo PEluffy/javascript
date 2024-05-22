@@ -3,15 +3,14 @@ interface User {
     first: string;
     last: string;
   };
-  sex?: "male" | "female";
+  sex?: string;
 }
 
 export const User = (props: User) => {
   const { sex = "not specified" } = props;
   return (
     <>
-      {props.name.first}
-      {props.name.last} sex is {sex}
+      {props.name.first} {props.name.last} your is sex is {sex}
     </>
   );
 };

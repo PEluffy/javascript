@@ -6,7 +6,7 @@ interface GreetProps {
 }
 export const Greet = (props: GreetProps) => {
   return (
-    <div className={props.isHidden ? "hidden" : "block"}>
+    <div className={props.isHidden ? "hidden" : "display"}>
       {props.isLoggedIn ? (
         <h2>hello {props.children}</h2>
       ) : (
