@@ -1,13 +1,25 @@
 const stompClient = new StompJs.Client({
   brokerURL: "ws://localhost:8080/gs-guide-websocket",
 });
+var inputUsername = $("#name");
+
+function onMessageReceived(payload) {
+  var message = JSON.parse(payload.body);
+  if (message.type === "JOIN") {
+    message.content = message.sender + "Joined!";
+  } else if (message.type === "LOGOUT") {
+    message.content = message.sender + "Left!";
+  } else {
+    message.content = message.content;
+  }
+  showMessage(message.content);
+}
 
 stompClient.onConnect = (frame) => {
   setConnected(true);
   console.log("Connected: " + frame);
-  stompClient.subscribe("/topic/greetings", (greeting) => {
-    showGreeting(JSON.parse(greeting.body).content);
-  });
+  stompClient.subscribe("/topic/chat", onMessageReceived);
+  sendName();
 };
 
 stompClient.onWebSocketError = (error) => {
@@ -42,12 +54,23 @@ function disconnect() {
 
 function sendName() {
   stompClient.publish({
-    destination: "/app/hello",
-    body: JSON.stringify({ name: $("#name").val() }),
+    destination: "/app/chat.addUser",
+    body: JSON.stringify({ sender: $("#name").val().trim(), type: "JOIN" }),
   });
 }
 
-function showGreeting(message) {
+function sendMessage() {
+  stompClient.publish({
+    destination: "/app/chat.sendMessage",
+    body: JSON.stringify({
+      content: $("#message").val().trim(),
+      sender: $("#name").val().trim(),
+      type: "CHAT",
+    }),
+  });
+}
+
+function showMessage(message) {
   $("#greetings").append("<tr><td>" + message + "</td></tr>");
 }
 
@@ -55,5 +78,5 @@ $(function () {
   $("form").on("submit", (e) => e.preventDefault());
   $("#connect").click(() => connect());
   $("#disconnect").click(() => disconnect());
-  $("#send").click(() => sendName());
+  $("#send").click(() => sendMessage());
 });
