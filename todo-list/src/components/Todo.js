@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Flex } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
-export const Todo = ({ task, toogleComplete }) => {
+export const Todo = ({ task, toogleComplete, deleteTodo, editTodo }) => {
   return (
     <Flex justify="space-between" align="center" className="Todo">
       <p
@@ -14,8 +14,8 @@ export const Todo = ({ task, toogleComplete }) => {
         {task.task}
       </p>
       <Flex className="fontsize18" gap="small">
-        <EditOutlined></EditOutlined>
-        <DeleteOutlined></DeleteOutlined>
+        <EditOutlined onClick={() => editTodo(task.id)}></EditOutlined>
+        <DeleteOutlined onClick={() => deleteTodo(task.id)}></DeleteOutlined>
       </Flex>
     </Flex>
   );
